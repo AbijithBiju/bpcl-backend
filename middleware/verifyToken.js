@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 	const token = req.headers.authorization.split(" ")[1];
 	try {
 		console.log(`token = ${token}`)
-		decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+		decoded = jwt.verify(token, process.env.JWT_SECRET_KEY || 'my_password')
 		console.log('verified')
 		console.log(decoded)
         console.log(Math.trunc(Date.now()/1000))
