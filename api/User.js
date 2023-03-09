@@ -3,7 +3,6 @@ const router = express.Router();
 
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.JWT_SECRET_KEY || "my_password";
-const tokenDuration = 60 * 60 * 3; // 3 hours
 const verifyToken = require("../middleware/verifyToken");
 
 const user = {
