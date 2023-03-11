@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('./config/db')
 const express = require('express')
 const port = process.env.PORT || 3000
 const app = express()
@@ -21,9 +22,11 @@ app.use(bodyParser.json())
 app.use(express.json())
 
 const UserRouter = require('./api/User')
+const AdminRouter = require('./api/Admin')
 
 app.use('/user',UserRouter)
+app.use('/admin',AdminRouter)
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(port, () => { 
+  console.log(`app listening on port ${port}`)
 })

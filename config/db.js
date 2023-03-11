@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
 
-uri = process.env.MONGODB_URI
+uri = 'mongodb+srv://bpcl_mediclaim_app:OWddEawfcaTtuBKi@cluster0.rnllksm.mongodb.net/?retryWrites=true&w=majority'
 
-mongoose.connect(uri, {
+mongoose.connect(uri, { 
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log("DB Connected") 
+    console.log("DB Connected")
 }).catch((err) => console.log(err))
+
