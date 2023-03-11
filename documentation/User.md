@@ -23,7 +23,7 @@
 * verify user name and password
 * if user exists and password verified
     * returns status, userid and token
-* token is valid for 3 hours (see bpcl-backend/api/User.js - line no. 43)
+* token is valid for 3 hours 
 
 ## GET
 ### /user/:userId/
