@@ -10,7 +10,7 @@ const options = {
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
 }
 
-app.use(cors());
+app.use(cors(options));
 app.options('*',cors());
 
 const bodyParser = require('body-parser')

@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
 	try {
 		console.log(`recived token-> ${token}`)
 		decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-		console.log('verified')
+		console.log('token verified')
 		req.tokenData = decoded
 		next()
 	} catch (ex) {

@@ -8,20 +8,21 @@ const verifyToken = require("../middleware/verifyToken");
 const User = require('../models/User')
 
 router.post("/login", async (req, res) => {
-    console.log('request body->'+req.body);
-    const user = await User.findOne({userName:req.body.userName}).exec()
-    console.log('user found->'+user)
+    console.log('request body->'+JSON.stringify(req.body));
+    const user = await User.findOne({userName:req.body.userName})
+    console.log('user found, _id -> '+user._id)
     if(user){
-        if (user.password === req.body.password) {
+        if (await user.validatePassword(req.body.password)) {
             console.log("login success");
             const accessToken = user.generateJWT()
             console.log('accessToken->'+accessToken);
-    
             res.json({
                 status: "SUCCESS",
+                id: user._id,
                 token: accessToken,
             });
         } else {
+            console.log("login failed");
             res.status(403);
             res.json({
                 status: "FAILED",
