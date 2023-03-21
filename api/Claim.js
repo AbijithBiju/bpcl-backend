@@ -6,7 +6,7 @@ const Admin = require('../models/Admin')
 const Dependent = require('../models/Dependent')
 const Claim = require("../models/Claim")
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/create', verifyToken, async (req, res) => {
     if (req.tokenData.type === "normal") {
         const requiredFields = ['self', 'dependent', 'claimType', 'treatmentType', 'claimAmount']
         for (let field of Object.keys(req.body)) {
@@ -41,8 +41,8 @@ router.post('/', verifyToken, async (req, res) => {
                 })
             }
         })
-        await User.findById(req.tokenData.id).then(async(result) => {
-            if (result) { 
+        await User.findById(req.tokenData.id).then(async (result) => {
+            if (result) {
 
                 result.addClaim(claim._id)
                 await result.save()
@@ -82,7 +82,35 @@ router.post('/', verifyToken, async (req, res) => {
     }
 })
 
+router.post('/update/:claimId', verifyToken, async (req, res) => {
+    if (req.tokenData.type === 'normal') {
+        const claim = await Claim.findById(req.params.claimId)
+        const { approve, reject, forwardTo } = req.body
+        if (approve) {
+            claim.approveClaim()
+            await success(req, res, claim)
+        }
+        if (reject) {
+            claim.rejectClaim()
+            await success(req, res, claim)
+        }
+        if (forwardTo) {
+            claim.forwardTo(forwardTo)
+            await success(req, res, claim)
+        }
+    }
+})
+
 module.exports = router;
 
+const success = async (req, res, claim) => {
+    claim.updatedBy(req.tokenData.id)
+    await claim.save()
+    res.status(200)
+    return res.json({
+        status: "SUCCESS",
+        claim: claim
+    })
+}
 
- 
+

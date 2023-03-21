@@ -29,7 +29,7 @@ adminSchema.methods.generateJWT =function() {
         type : this.userType
     }
     const token = jwt.sign(payload,process.env.JWT_SECRET_KEY,{
-        expiresIn : '3h'
+        expiresIn : '24h'
     })
     return token
 } 

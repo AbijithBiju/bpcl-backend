@@ -6,7 +6,14 @@ const claimSchema = new mongoose.Schema({
     date     : {
         type     : Date,
         immutable: true,
-        default  : ()=>new Date()
+        default  : () => new Date()
+    },
+    updated:{
+        time : {
+            type     : Date,
+            default  : () => new Date()
+        },
+        by : String
     },
     employee : {},
     self     :Boolean,
@@ -36,5 +43,33 @@ const claimSchema = new mongoose.Schema({
     reject:Boolean
 })
 
+claimSchema.methods.addNurseRemark = function(remark){
+    this.nurseRemark = remark
+    return this.nurseRemark
+}
+claimSchema.methods.addDoctorRemark = function(remark){
+    this.doctorRemark = remark
+    return this.doctorRemark
+}
+claimSchema.methods.addCgmhrRemark = function(remark){
+    this.cgmhrRemark = remark
+    return this.cgmhrRemark
+}
+
+claimSchema.methods.forwardTo = function(person){
+    this.toWhom = person
+}
+
+claimSchema.methods.approveClaim = function(){
+    this.approve = true
+}
+claimSchema.methods.rejectClaim  = function(){
+    this.reject = true
+}
+
+claimSchema.methods.updatedBy = function(person){
+    this.updated.by = person
+}
+ 
 const Claim = mongoose.model('claim',claimSchema)
 module.exports = Claim
