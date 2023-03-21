@@ -23,10 +23,12 @@ app.use(express.json())
 
 const UserRouter = require('./api/User')
 const AdminRouter = require('./api/Admin')
+const ClaimRouter = require('./api/Claim')
 
 app.use('/user',UserRouter)
+app.use('/user/createClaim',ClaimRouter)
 app.use('/admin',AdminRouter)
 
 app.listen(port, () => { 
-  console.log(`app listening on port ${port}`)
+  console.log(`app listening on port ${port}`) 
 })

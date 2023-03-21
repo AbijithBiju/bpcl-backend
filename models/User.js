@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     userType: {
         type: String,
         enum: {
-            values: ['normal', 'nurse', 'doctor', 'cghmr'],
+            values: ['normal', 'nurse', 'doctor', 'cgmhr'],
             message: 'Invalid type'
         }
     },
@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
         }
     },
     claimHistory: {
-        type: [{ id: mongoose.Types.ObjectId }]
+        type: []
     },
     claimedAmount: {
         type: Number
@@ -132,6 +132,11 @@ userSchema.methods.setSMA = function () {
 userSchema.methods.removeSMA = function () {
     this.isSMA = false
     return this.isSMA
+}
+
+userSchema.methods.addClaim = function (id) {
+    this.claimHistory.push(id)
+    return this.claimHistory
 }
 
 const User = mongoose.model('user', userSchema)

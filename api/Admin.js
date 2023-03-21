@@ -32,11 +32,11 @@ router.post('/createuser', verifyToken, async (req, res) => {
         for (let field of Object.keys(req.body)) {
             if (requiredFields.includes(field) && req.body[field] === "") {
                 res.status(400);
-                res.json({
+                return res.json({
                     status: "FAILED",
                     message: "Empty input field(s)"
                 })
-            }
+            } 
         }
         const query = {
             userName: req.body.userName,
@@ -72,7 +72,7 @@ router.post('/createuser', verifyToken, async (req, res) => {
                         console.log(`user name : ${user.userName}`)
                         console.log(`password  : ${password}`)
                         res.status(200);
-                        res.json({
+                        return res.json({
                             status: "SUCCESS",
                             password: password,
                         });
@@ -81,7 +81,7 @@ router.post('/createuser', verifyToken, async (req, res) => {
                     console.log(err)
                     console.log('error saving user');
                     res.status(500);
-                    res.json({
+                    return res.json({
                         status: "FAILED",
                         message: err.message
                     });
@@ -91,7 +91,7 @@ router.post('/createuser', verifyToken, async (req, res) => {
         })
     } else {
         res.status(403)
-        res.json({
+        return res.json({
             status: "FAILED",
             message: 'access restricted'
         })
@@ -107,7 +107,7 @@ router.post('/addDependent/:id', verifyToken, async (req, res) => {
             for (let field of Object.keys(req.body)) {
                 if (requiredFields.includes(field) && req.body[field] === "") {
                     res.status(400);
-                    res.json({
+                    return res.json({
                         status: "FAILED",
                         message: "Empty input field(s)"
                     })
@@ -132,14 +132,14 @@ router.post('/addDependent/:id', verifyToken, async (req, res) => {
                     if (savedDependent && savedUser) {
                         console.log('saved user successfully');
                         res.status(200)
-                        res.json({
+                        return res.json({
                             status: "SUCCESS",
                             message: "dependent added successfuly"
                         })
                     } else {
                         console.log('error saving user and dependent');
                         res.status(403)
-                        res.json({
+                        return res.json({
                             status: "FAILED",
                             message: "error saving user and dependent"
                         })
@@ -148,14 +148,14 @@ router.post('/addDependent/:id', verifyToken, async (req, res) => {
             })
         } else {
             res.status(403)
-            res.json({
+            return res.json({
                 status: "FAILED",
                 message: 'user not found'
             })
         }
     } else {
         res.status(403)
-        res.json({
+        return res.json({
             status: "FAILED",
             message: 'access restricted'
         })
@@ -164,11 +164,3 @@ router.post('/addDependent/:id', verifyToken, async (req, res) => {
 
 module.exports = router;
 
-
-const response = (res,status,msg,alert) => {
-    res.status(status)
-    res.json({
-        status:msg,
-        message:alert
-    })
-}

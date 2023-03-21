@@ -27,7 +27,7 @@
 |-------------|---------------------------|--------|
 |userName     |String                     |        |
 |userType     |[nurse,doctor,cghmr,normal]|        |
-|gender       |[male,femail,other]        |        |
+|gender       |[male,female,other]        |        |
 |department   | [canteen,school]          |        |
 |address      | Object{}                  |        |
 |             |houseName                  | String |
@@ -47,3 +47,22 @@
 #### Description
 * exclusively for admin to create new user
 * returns the password of the newely created user
+
+### /admin/addDependent/:id (accepts JSON)
+
+* #### Request Body
+|Filed        |Datatype                   | 
+|-------------|---------------------------|
+|name         |String                     |
+|age          |Number                     |
+|relation     |[wife,husband,child,parent,sibling]|
+|isSMA        |Boolean|
+
+* #### Respnse
+|Field|Data Type|
+|---------|--------------------|
+|status   |['SUCCESS','FAILED']|
+
+#### Description
+* to add a dependent to a user
+* userId is passed as request parameter
